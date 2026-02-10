@@ -1,5 +1,6 @@
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Food, function (sprite, otherSprite) {
     if (mySprite.overlapsWith(otherSprite)) {
+        Points += 1
         NEW = 0
         sprites.destroyAllSpritesOfKind(SpriteKind.Food)
         tiles.placeOnRandomTile(mySprite, assets.tile`transparency16`)
@@ -10,12 +11,14 @@ let Exit: Sprite = null
 let mySprite2: Sprite = null
 let mySprite: Sprite = null
 let NEW = 0
-let Timeset = 901
-let Life = 9
+let Timesetset = 901
+let Life = 3
+let Timeset = Timesetset
+let Lifebefore = Life
 let Pointtext = textsprite.create("0")
 Pointtext.setIcon(assets.image`Star`)
 Pointtext.setPosition(10, 116)
-let Points = -1
+let Points = 0
 let Lifetext = textsprite.create(convertToText(Life))
 Lifetext.setPosition(146, 116)
 Lifetext.setIcon(assets.image`Life`)
@@ -71,11 +74,17 @@ forever(function () {
         tiles.placeOnRandomTile(Exit, assets.tile`transparency16`)
         if (mySprite.overlapsWith(mySprite2) || mySprite.overlapsWith(Exit) || mySprite2.overlapsWith(Exit)) {
             NEW = 0
+            sprites.destroyAllSpritesOfKind(SpriteKind.Food)
         } else {
             NEW = 1
-            Time = Timeset
-            Points += 1
             Pointtext.setText(convertToText(Points))
+            if (Points > 10) {
+                Timeset = Timesetset - (Points - 10) * 10
+            }
+            if (Points <= 10) {
+                Timeset = Timesetset + (Lifebefore - Life) * 100
+            }
+            Time = Timeset
         }
     }
 })
