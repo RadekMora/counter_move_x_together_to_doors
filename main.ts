@@ -69,7 +69,7 @@ forever(function () {
     while (NEW == 0) {
         Exit = sprites.create(assets.image`Dvere`, SpriteKind.Food)
         tiles.placeOnRandomTile(Exit, assets.tile`transparency16`)
-        if (mySprite.tilemapLocation() == Exit.tilemapLocation() || mySprite2.tilemapLocation() == Exit.tilemapLocation()) {
+        if (mySprite.overlapsWith(mySprite2) || mySprite.overlapsWith(Exit) || mySprite2.overlapsWith(Exit)) {
             NEW = 0
         } else {
             NEW = 1
